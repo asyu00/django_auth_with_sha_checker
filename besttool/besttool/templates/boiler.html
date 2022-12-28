@@ -1,0 +1,109 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang='en' data-theme="dark">
+<head>
+  <title>{% block title %}{% endblock %} | Parakeet</title>
+  <meta name="description" content="All in one malware analysis tool">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <!-- Bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <!-- JS Library etc.-->
+  <script src="https://kit.fontawesome.com/d8ea948054.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" integrity="sha512-DHNepbIus9t4e6YoMBSJLwl+nnm0tIwMBonsQQ+W9NKN6gVVVbomJs9Ii3mQ+HzGZiU5FyJLdnAz9a63ZgZvTQ==" crossorigin="anonymous"></script>
+  {% block head %}{% endblock %}
+
+  <!--custom css-->
+  <link rel='stylesheet' type='text/css' href="{% static 'common.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'parakeet/custom.css' %}">
+  <link rel='stylesheet' type='text/css' href="{% static 'parakeet/btn.css' %}">
+
+  <link rel='shortcut icon' type="image/png" href="{% static 'favicon.ico' %}" />
+</head>
+
+<body class="pr-0 {% block bodyclass %}{% endblock %}" style='overflow: hidden;'>
+  {% if not load_nav %}
+  <div class="d-flex wrapper-wrap">
+    {% if user.is_authenticated %}
+    <div class="wrapper-side toggled sidebar-transition d-none d-md-block" style='z-index:99999'>
+      <div class="position-fixed sidebar-wrapper">
+        <div class="sidebar-header py-3 d-flex justify-content-between">
+          <span class="px-3 d-none d-lg-inline" style="white-space: nowrap;" onclick="window.location.href = {% url 'parakeet:home' %}">
+            <img class="navbar-logo" width=115 src=""></span>
+          <a class="mx-auto mx-lg-0 px-lg-3 text-center text-lg-left sidebar-close" style='margin: auto 0' onclick="toggleSidebar()"><i class="fas fa-angle-left"></i></a>
+        </div>
+        <ul class="sidenav">
+          <li><a class="text-lg-left nav-link leave-modal-target" style='text-align: center;' href="{% url 'parakeet:home' %}" title="placeholder" data-toggle="tooltip" data-placement='right'><i class="fas fa-calendar-alt align-middle nav-resize"></i><span class="pl-3 d-none d-lg-inline text-2 align-middle">lorem ipsum</span></a></li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+    <div class="wrapper-content flex-grow-1 mw-100">
+      <nav class="navbar navbar-expand-md px-3 fixed-top" style='background-color: #f9faf4'>
+        <div>
+          {% if user.is_authenticated %}
+          <button class="navbar-toggler side-toggler border-0 p-0 mr-3 d-none d-md-inline-block" type="button" onclick="toggleSidebar()"><span class="navbar-toggler-icon"></span></button>
+          {% endif %}
+          <a class="navbar-brand p-0 leave-modal-target" href="{% url 'parakeet:home'%}">
+             <!-- NAVBAR LOGO -->
+            <img class="navbar-logo" src="">Parakeet
+          </a>
+        </div>
+        <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarCollapsible" aria-controls="navbarCollapsible" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="navbar-collapse collapse text-right" id="navbarCollapsible">
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+            <div class="d-md-none">
+              <li class="nav-item">Hi, {{ user.username }}!</li>
+            </div>
+            <div class="d-md-none">
+            {% endif %}
+            {% if not user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link d-inline-block nav-login-btn" href="{% url 'parakeet:login' %}">Login / Register</a></li>
+            {% else %}
+            </div>
+              <li class="nav-item"><a id='logoutBtn' class="nav-link d-inline-block nav-login-btn leave-modal-target special-text" style="" href="{% url 'parakeet:logout' %}"><span>Hi, {{ user.username }}!<span></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+{% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  {% block scripts %}{% endblock %}
+  <script src='{% static "parakeet/scripts/sidebar.js" %}'></script>
+  <script type="text/javascript">
+    // Refresh to top of page on load
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    } else {
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        };
+    }
+   
+    // Hides navbar when clicked outside of it
+    $("body").click(function (event) {
+    var navigation = $(event.target).parents(".navbar").length;
+    if(!navigation) {
+        $(".navbar .navbar-collapse").collapse("hide");
+    }
+});
+  </script>
+</body>
+</html>

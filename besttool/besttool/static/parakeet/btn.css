@@ -1,0 +1,44 @@
+:root {
+  --pyokonin: #ffa05c;
+  --lighten: 105%
+}
+
+
+.btn-outline-dark {
+    color: var(--pyokonin);
+    background-color: transparent;
+    background-image: none;
+    border-color: #ffa05c;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--pyokonin);
+    border-color: var(--pyokonin);
+    filter: brightness(var(--lighten));
+}
+
+.btn-outline-dark:focus,
+.btn-outline-dark.focus {
+    box-shadow: 0 0 0 .2rem rgba(255, 160, 92, 0.5)
+}
+
+.btn-outline-dark.disabled,
+.btn-outline-dark:disabled {
+    color: var(--pyokonin);
+    background-color: transparent;
+}
+
+.btn-outline-dark:not(:disabled):not(.disabled):active,
+.btn-outline-dark:not(:disabled):not(.disabled).active,
+.show>.btn-outline-dark.dropdown-toggle {
+    background-color: var(--pyokonin);
+    border-color: var(--pyokonin);
+    filter: brightness(var(--lighten));
+
+}
+
+.btn-outline-dark:not(:disabled):not(.disabled):active:focus,
+.btn-outline-dark:not(:disabled):not(.disabled).active:focus,
+.show>.btn-outline-dark.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(255, 160, 92, 0.5);
+}
