@@ -1,0 +1,45 @@
+{% extends '../boiler.html' %}
+{% block content %}
+<section>
+  <div class="container">
+      <div class="col-md-12 col-centered">
+        <h1 class="mt-5 mb-3">UPLOAD</h1>
+        <p class='lead'>get file hash (SHA256 only because speedcode)</p>
+    </div>
+  </div>
+</section>
+<section>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <section class="w-100 p-4 d-flex justify-content-center pb-4">
+      <div style="width: 22rem;">
+        <label class="form-label" for="customFile">Default file input example</label>
+        <input type="file" class="form-control" id="customFile" name='uploaded_file'>
+        <br>
+
+		<input type="submit" class='btn btn-outline-dark' value='Submit'>
+  		<p class=lead><a href="{% url 'parakeet:home' %}">Return to home</a></p>
+      </div>
+  </section>
+  </form>
+</section>
+{% if digestsha256 %}
+<section class=centerdiv>
+	<table class=table style='width:50%;margin:auto;'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>SHA256</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{namefile}}</td>
+				<td>{{digestsha256}}</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+{% endif %}
+
+{% endblock %}
