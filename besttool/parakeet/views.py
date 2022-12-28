@@ -26,6 +26,7 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+@login_required
 def sha_upload_page(request):
     if request.method == 'POST':
         name = request.FILES['uploaded_file'].name
